@@ -7,9 +7,9 @@
 var Promise = require('bluebird'),
     fs = require('fs'),
     googleapis = require('googleapis'),
-    https = require('https');
-util = require('util');
-BaseStore = require('../../core/storage/base');
+    https = require('https'),
+    util = require('util'),
+    BaseStore = require('../../core/storage/base');
 
 function GhostGoogleDrive(config) {
     this.config = config || {};
@@ -63,11 +63,11 @@ GhostGoogleDrive.prototype.exists = function(filename) {
     var key = _this.config.key
     var jwtClient = new googleapis.auth.JWT(key.client_email, null, key.private_key, ['https://www.googleapis.com/auth/drive'], null);
 
-    return new Promise(function(resolve) {
+    return new Promise(function(resolve, reject) {
         jwtClient.authorize(function(err, tokens) {
             if (err) {
                 console.log(err);
-                next()
+                reject(err);
             }
             var drive = googleapis.drive({
                 version: 'v2',
@@ -133,11 +133,11 @@ GhostGoogleDrive.prototype.delete = function (filename) {
   var key = _this.config.key
   var jwtClient = new googleapis.auth.JWT(key.client_email, null, key.private_key, ['https://www.googleapis.com/auth/drive'], null);
 
-  return new Promise(function(resolve) {
+  return new Promise(function(resolve, reject) {
       jwtClient.authorize(function(err, tokens) {
           if (err) {
               console.log(err);
-              next()
+              reject(err)
           }
           var drive = googleapis.drive({
               version: 'v2',
