@@ -9,7 +9,7 @@ var Promise = require('bluebird'),
     googleapis = require('googleapis'),
     https = require('https'),
     util = require('util'),
-    BaseStore = require('../../core/storage/base');
+    BaseStore = require('../../core/server/storage/base');
 
 function GhostGoogleDrive(config) {
     this.config = config || {};
